@@ -68,6 +68,11 @@ static int32_t next_aprs = 0;
 LiquidCrystal lcd(LCD_PINS);
 #endif
 
+#ifdef GPS_SOFTWARE_SERIAL_PIN
+#include <SoftwareSerial.h>
+SoftwareSerial gpsSerial = SoftwareSerial(GPS_SOFTWARE_SERIAL_PIN, -1);
+#endif
+
 
 void setup()
 {
@@ -75,6 +80,9 @@ void setup()
   pin_write(LED_PIN, LOW);
 
   Serial.begin(GPS_BAUDRATE);
+#ifdef GPS_SOFTWARE_SERIAL_PIN
+  gpsSerial.begin(GPS_BAUDRATE);
+#endif
 #ifdef DEBUG_RESET
   Serial.println("RESET");
 #endif
@@ -103,10 +111,17 @@ void setup()
   // Do not start until we get a valid time reference
   // for slotted transmissions.
   if (APRS_SLOT >= 0) {
+#ifndef GPS_SOFTWARE_SERIAL_PIN
     do {
       while (! Serial.available())
         power_save();
     } while (! gps_decode(Serial.read()));
+#else
+    do {
+      while (! gpsSerial.available())
+        power_save();
+    } while (! gps_decode(gpsSerial.read()));
+#endif
     
     next_aprs = millis() + 1000 *
       (APRS_PERIOD - (gps_seconds + APRS_PERIOD - APRS_SLOT) % APRS_PERIOD);
@@ -136,8 +151,13 @@ void get_pos()
   int valid_pos = 0;
   uint32_t timeout = millis();
   do {
+#ifndef GPS_SOFTWARE_SERIAL_PIN
     if (Serial.available())
       valid_pos = gps_decode(Serial.read());
+#else
+      if (gpsSerial.available())
+        valid_pos = gps_decode(gpsSerial.read());
+#endif
   } while ( (millis() - timeout < VALID_POS_TIMEOUT) && ! valid_pos) ;
   
 #ifndef GPS_DISABLED

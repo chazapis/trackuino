@@ -93,6 +93,10 @@
 // debug data will be printed out the serial port.
 #define GPS_BAUDRATE  9600
 
+// If using software serial for the GPS, set the pin here.
+// Be warned that this causes the audio to be distorted, due to heavy interrupt use.
+//#define GPS_SOFTWARE_SERIAL_PIN 2
+
 // Disable GPS and just use a predefined latitude and longitude.
 // Make sure to use the correct format. You may also define an altitude (in meters).
 //#define GPS_DISABLED
