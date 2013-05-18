@@ -39,8 +39,8 @@
 // - Cars:       9
 // - Home:       0
 // - IGate:      5
-#define S_CALLSIGN      "MYCALL"
-#define S_CALLSIGN_ID   11
+#define S_CALLSIGN      "SV1OAN"
+#define S_CALLSIGN_ID   9
 
 // Destination callsign: APRS (with SSID=0) is usually okay.
 #define D_CALLSIGN      "APRS"
@@ -55,12 +55,12 @@
 
 // Symbol table and code: '/' for primary table, code 'O' for balloon, '-' for QTH.
 #define SYMBOL_TABLE    '/'
-#define SYMBOL_CODE     '-'
+#define SYMBOL_CODE     '>'
 
 // APRS comment: this goes in the comment portion of the APRS message. You
 // might want to keep this short. The longer the packet, the more vulnerable
 // it is to noise. 
-#define APRS_COMMENT    "Trackuino reminder: replace callsign with your own"
+#define APRS_COMMENT    "Trackuino test! 73"
 
 
 // --------------------------------------------------------------------------
@@ -91,7 +91,7 @@
 
 // GPS baud rate (in bits per second). This is also the baud rate at which
 // debug data will be printed out the serial port.
-#define GPS_BAUDRATE  9600
+#define GPS_BAUDRATE  4800
 
 // Disable GPS and just use a predefined latitude and longitude.
 // Make sure to use the correct format. You may also define an altitude (in meters).
@@ -148,7 +148,7 @@
 // Pin mappings for the internal / external temperature sensors. VS refers
 // to (arduino) digital pins, whereas VOUT refers to (arduino) analog pins.
 #define INTERNAL_LM60_VS_PIN     6
-#define INTERNAL_LM60_VOUT_PIN   0
+#define INTERNAL_LM60_VOUT_PIN   3
 #define EXTERNAL_LM60_VS_PIN     7
 #define EXTERNAL_LM60_VOUT_PIN   1
 
